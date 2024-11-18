@@ -8,7 +8,7 @@ describe('Example tests', () => {
   it('Navigate to Contact us', () => {
     cy.get('a[href="/contact_us"]').should('be.visible').click()
     cy.url().should('contain', 'contact')
-    cy.get('.col-sm-12').find('h2')
+    cy.get('.bg').find('h2')
     cy.get('input').should('be.empty').and('be.visible')
     cy.get('[data-qa="name"]').type('Name')
     cy.get('[data-qa="email"]').type('example@gmail.com')
