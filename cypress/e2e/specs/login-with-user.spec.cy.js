@@ -1,19 +1,18 @@
 /// <reference types="cypress" />
 
-describe('Registration tests', () => {
-  let email
-  beforeEach('Navigate to automationexercise', () => {
-    email = `amer${Date.now()}@example.com`
+describe('Testing login', () => {
+  beforeEach(() => {
     cy.visit('https://automationexercise.com/')
   })
-  it('registracija', () => {
+
+  it('Registration', () => {
     // When
     cy.get('a[href*="login"]').should('be.visible').click()
     // Then
     cy.get('.signup-form').should('be.visible')
     //When
     cy.get('[data-qa="signup-name"]').clear().type('Amer')
-    cy.get('[data-qa="signup-email"]').clear().type(email)
+    cy.get('[data-qa="signup-email"]').clear().type('amer@example.com')
     cy.get('[data-qa="signup-button"]').click()
     //Then
     cy.get('form[action*="signup"]').should('be.visible')
@@ -21,7 +20,7 @@ describe('Registration tests', () => {
     cy.get('input[type="radio"').should('be.visible').check('Mr')
     cy.get('[data-qa="email"')
       .should('be.disabled')
-      .and('have.attr', 'value', email)
+      .and('have.attr', 'value', 'amer@example.com')
     cy.get('[data-qa="password"]').clear().type('Test12345')
     cy.get('[data-qa="days"]').select(7)
     cy.get('[data-qa="months"]').select(2)
@@ -42,5 +41,26 @@ describe('Registration tests', () => {
     cy.get('[data-qa="account-created"]')
       .should('be.visible')
       .and('contain.text', 'Account Created!')
+  })
+
+  it.only('Login with user details', () => {
+    //When
+    cy.get('a[href="/login"]').should('be.visible').click()
+    //Then
+    cy.url()
+      .get('.login-form')
+      .contains('Login to your account')
+      .and('be.visible')
+    //And
+    cy.get('[data-qa="login-email"]').clear().type('amer@example.com')
+    cy.get('[data-qa="login-password"]').clear().type('Test12345')
+    //Than
+    cy.get('[data-qa="login-button"]').click()
+    //When
+    cy.url()
+      .get('.navbar-nav')
+      .find('li')
+      //.eq(9)
+      .should('contain.text', 'Logged in as')
   })
 })

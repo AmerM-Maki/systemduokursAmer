@@ -1,7 +1,8 @@
 /// <reference types="cypress" />
-
+let email
 describe('Example tests', () => {
   beforeEach(() => {
+    email = `amer${Date.now()}@example.com`
     cy.visit('https://automationexercise.com/')
   })
   it('Navigate to registration form', () => {
