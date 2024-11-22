@@ -52,5 +52,6 @@ describe('form', () => {
     //cy.get('[data-qa="city"]').invoke('prop', 'validationMessage').should('equal', 'Please fill out this field.')
     //cy.get('[data-qa="zipcode"]').invoke('prop', 'validationMessage').should('equal', 'Please fill out this field.')
     //cy.get('[data-qa="mobile_number"]').invoke('prop', 'validationMessage').should('equal', 'Please fill out this field.')
+    //cy.get('[data-qa="mobile_number"]').invoke('prop', 'validationMessage').should('equal', 'Please fill out this field.')
   })
 })
