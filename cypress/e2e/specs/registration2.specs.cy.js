@@ -2,11 +2,18 @@
 
 describe('Registration tests', () => {
   let email
+ // let secondEmail
+  //let users=(
+  //  successRegistrationuser:{email,id,password},
+  //  bannedUser:{email,id,password}
+  // )
   beforeEach('Navigate to automationexercise', () => {
     email = `amer${Date.now()}@example.com`
     cy.visit('https://automationexercise.com/')
   })
-  it('registracija', () => {
+  it('Registration-Logout-Login', () => {
+  // users.bannedUser.email=`amer${Date.now()}@example.com`
+
     // When
     cy.get('a[href*="login"]').should('be.visible').click()
     // Then
@@ -42,5 +49,18 @@ describe('Registration tests', () => {
     cy.get('[data-qa="account-created"]')
       .should('be.visible')
       .and('contain.text', 'Account Created!')
+    //Then
+    cy.get('[data-qa="continue-button').should('be.visible').click()
+    cy.get('a[href="/logout"').should('be.visible').click()
+    cy.get('a[href="/login"').should('be.visible').click()
+    cy.get('[data-qa="login-email"]').clear().type(email)
+    cy.get('[data-qa="login-password"]').clear().type('Test12345')
+    cy.get('[data-qa="login-button"]').should('be.visible').click()
+
+    //Then
+    cy.get('a').contains('Logged in as')
+    cy.get('a[href="/logout"]').should('be.visible')
+
   })
+
 })

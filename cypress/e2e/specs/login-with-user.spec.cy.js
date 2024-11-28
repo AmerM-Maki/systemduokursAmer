@@ -52,7 +52,7 @@ describe('Testing login', () => {
       .contains('Login to your account')
       .and('be.visible')
     //And
-    cy.get('[data-qa="login-email"]').clear().type('amer@example.com')
+    cy.get('[data-qa="login-email"]').clear().type('amer1732812730101@example.com')
     cy.get('[data-qa="login-password"]').clear().type('Test12345')
     //Than
     cy.get('[data-qa="login-button"]').click()
