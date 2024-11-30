@@ -2,7 +2,7 @@
 
 describe('Registration tests', () => {
   let email
- // let secondEmail
+  // let secondEmail
   //let users=(
   //  successRegistrationuser:{email,id,password},
   //  bannedUser:{email,id,password}
@@ -12,7 +12,7 @@ describe('Registration tests', () => {
     cy.visit('https://automationexercise.com/')
   })
   it('Registration-Logout-Login', () => {
-  // users.bannedUser.email=`amer${Date.now()}@example.com`
+    // users.bannedUser.email=`amer${Date.now()}@example.com`
 
     // When
     cy.get('a[href*="login"]').should('be.visible').click()
@@ -60,7 +60,5 @@ describe('Registration tests', () => {
     //Then
     cy.get('a').contains('Logged in as')
     cy.get('a[href="/logout"]').should('be.visible')
-
   })
-
 })
