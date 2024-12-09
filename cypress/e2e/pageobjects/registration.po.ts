@@ -74,6 +74,60 @@ export class RegistrationPage extends Page {
     }
   }
 
+  shouldErrorMessageBe = (options: {
+    errorMessage: string
+    onField: string
+  }) => {
+    this.cy
+      .get(`[data-qa="${options.onField}"]`)
+      .invoke('prop', 'validationMessage')
+      .should('eq', options.errorMessage)
+  }
+  registerUserApi = (options: {
+    name: string
+    email: string
+    password: string
+    title: string
+    birth_date: string
+    birth_month: string
+    birth_year: string
+    firstName: string
+    lastName: string
+    company: string
+    address1: string
+    address2: string
+    country: string
+    zipCode: string
+    state: string
+    city: string
+    mobile_number: string
+  }) => {
+    return cy.request({
+      method: 'POST',
+      url: '/api/createAccount',
+      form: true,
+      body: {
+        name: options.name,
+        email: options.email,
+        password: options.password,
+        title: options.title,
+        birth_date: options.birth_date,
+        birth_month: options.birth_month,
+        birth_year: options.birth_year,
+        firstname: options.firstName,
+        lastname: options.lastName,
+        company: options.company,
+        address1: options.address1,
+        address2: options.address2,
+        country: options.country,
+        zipcode: options.zipCode,
+        state: options.state,
+        city: options.city,
+        mobile_number: options.mobile_number,
+      },
+    })
+  }
+
   get emailInputRegistration() {
     return cy.get('[data-qa="signup-email"]')
   }
