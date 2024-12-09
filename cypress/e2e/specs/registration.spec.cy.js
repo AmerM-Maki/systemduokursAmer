@@ -23,8 +23,8 @@ describe('Registration tests', () => {
       germanData = $data['German']
     })
     credentials = Cypress.env('credentials')
-    newEmail = `aid${Date.now()}@example.com`
-    invalidEmail = `aid${Date.now()}gmail.com`
+    newEmail = `amer${Date.now()}@example.com`
+    invalidEmail = `amer${Date.now()}gmail.com`
     cy.visit('/')
   })
 
@@ -36,7 +36,7 @@ describe('Registration tests', () => {
     registrationPage.shouldSignupFormBeVisible({ visible: true })
 
     // When
-    registrationPage.populateEmailandName({ email: newEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: newEmail, name: 'Amer' })
 
     // Then
     registrationPage.shouldRegistrationFormBeVisible({ visible: true })
@@ -50,7 +50,7 @@ describe('Registration tests', () => {
     registrationPage.shouldSignupFormBeVisible({ visible: true })
 
     // When
-    registrationPage.populateEmailandName({ email: newEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: newEmail, name: 'Amer' })
 
     // Then
     registrationPage.shouldRegistrationFormBeVisible({ visible: true })
@@ -64,8 +64,8 @@ describe('Registration tests', () => {
       yearOfBirth: '1997',
       newsletter: true,
       specialOffers: true,
-      firstName: 'Aid',
-      lastName: 'Hodzic',
+      firstName: 'Amer',
+      lastName: 'Muhic',
       company: 'SystemDuo',
       address: 'Zmaja od Bosne',
       country: 'Canada',
@@ -82,14 +82,14 @@ describe('Registration tests', () => {
     })
   })
 
-  it('Succesfull login after registration', () => {
+  it.only('Succesfull login after registration', () => {
     // When
     registrationPage.getNavigation().visit()
 
     // Then
     registrationPage.shouldSignupFormBeVisible({ visible: true })
     // When
-    registrationPage.populateEmailandName({ email: newEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: newEmail, name: 'Amer' })
 
     // Then
     registrationPage.shouldRegistrationFormBeVisible({ visible: true })
@@ -97,14 +97,14 @@ describe('Registration tests', () => {
     // When
     registrationPage.registerUser({
       title: 'Mr',
-      password: 'Test123',
+      password: 'Test12345',
       dayOfBirth: 13,
       monthOfBirth: 2,
       yearOfBirth: '1997',
       newsletter: true,
       specialOffers: true,
-      firstName: 'Aid',
-      lastName: 'Hodzic',
+      firstName: 'Amer',
+      lastName: 'Muhic',
       company: 'SystemDuo',
       address: 'Zmaja od Bosne',
       country: 'Canada',
@@ -120,17 +120,19 @@ describe('Registration tests', () => {
       successMessage: 'Account Created!',
     })
 
-    // When
-    cy.get('[data-qa="continue-button"]').should('be.visible').click()
-    cy.get('a[href="/logout"').should('be.visible').click()
-    cy.get('a[href*="login"]').should('be.visible').click()
-    cy.get('[data-qa="login-email"]').clear().type(newEmail)
-    cy.get('[data-qa="login-password"]').clear().type('Test123')
-    cy.get('[data-qa="login-button"]').should('be.visible').click()
+    registrationPage.registeredUserLogin({
+      visible: true,
+    })
+    registrationPage.populateLoginDetails({
+      email: newEmail,
+      password: 'Test12345',
+    })
+    registrationPage.clickLoginButton({
+      visible: true,
+    })
 
     // Then
-    cy.get('a').contains('Logged in as Aid')
-    cy.get('a[href="/logout"]').should('be.visible')
+    registrationPage.shouldUserBeLogged({ visible: true })
   })
 
   it('Registration with empty one of the required fields', () => {
@@ -140,7 +142,7 @@ describe('Registration tests', () => {
     // Then
     registrationPage.shouldSignupFormBeVisible({ visible: true })
     // When
-    registrationPage.populateEmailandName({ email: newEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: newEmail, name: 'amer' })
 
     // Then
     registrationPage.shouldRegistrationFormBeVisible({ visible: true })
@@ -148,13 +150,13 @@ describe('Registration tests', () => {
     // When
     registrationPage.registerUser({
       title: 'Mr',
-      password: 'Test123',
+      password: 'Test12345',
       dayOfBirth: 13,
       monthOfBirth: 2,
       yearOfBirth: '1997',
       newsletter: true,
       specialOffers: true,
-      lastName: 'Hodzic',
+      lastName: 'Muhic',
       company: 'SystemDuo',
       address: 'Zmaja od Bosne',
       country: 'Canada',
@@ -178,7 +180,7 @@ describe('Registration tests', () => {
     // Then
     registrationPage.shouldSignupFormBeVisible({ visible: true })
     // When
-    registrationPage.populateEmailandName({ email: invalidEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: invalidEmail, name: 'Amer' })
 
     // Then
     registrationPage.shouldErrorMessageBe({

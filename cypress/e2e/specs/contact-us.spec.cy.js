@@ -39,8 +39,8 @@ describe('Contact us tests', () => {
     cy.url().should('contain', 'contact_us')
 
     // When
-    cy.get('[data-qa="name"]').should('be.visible').clear().type('Aid')
-    cy.get('[data-qa="email"]').clear().type('aid@example.com')
+    cy.get('[data-qa="name"]').should('be.visible').clear().type('Amer')
+    cy.get('[data-qa="email"]').clear().type('amer@example.com')
     cy.get('[data-qa="subject"]').clear().type(spanishData.accountCreated)
     cy.get('[data-qa="message"]').clear().type(messageBody)
 
@@ -62,7 +62,7 @@ describe('Contact us tests', () => {
     cy.url().should('contain', 'contact_us')
 
     // When
-    cy.get('[data-qa="name"]').should('be.visible').clear().type('Aid')
+    cy.get('[data-qa="name"]').should('be.visible').clear().type('Amer')
     cy.get('[data-qa="subject"]').clear().type('Something')
     cy.get('[data-qa="message"]').clear().type('Message')
 

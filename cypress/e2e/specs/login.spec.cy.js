@@ -1,10 +1,16 @@
+/// <reference types="cypress" />
+
 import { registrationPage, loginPage } from '../../utils/initialize'
 
 describe('Login tests', () => {
   let email
+  let newEmail
+  let invalidEmail
 
   beforeEach(() => {
-    email = `aid${Date.now()}@example.com`
+    email = `amer${Date.now()}@example.com`
+    newEmail = `amer${Date.now()}@example.com`
+    invalidEmail = `amer${Date.now()}gmail.com`
     cy.visit('/')
     // When
     registrationPage.getNavigation().visit()
@@ -12,7 +18,7 @@ describe('Login tests', () => {
     // Then
     registrationPage.shouldSignupFormBeVisible({ visible: true })
     // When
-    registrationPage.populateEmailandName({ email: newEmail, name: 'Aid' })
+    registrationPage.populateEmailandName({ email: newEmail, name: 'Amer' })
 
     // Then
     registrationPage.shouldRegistrationFormBeVisible({ visible: true })
@@ -20,14 +26,14 @@ describe('Login tests', () => {
     // When
     registrationPage.registerUser({
       title: 'Mr',
-      password: 'Test123',
+      password: 'Test12345',
       dayOfBirth: 13,
       monthOfBirth: 2,
       yearOfBirth: '1997',
       newsletter: true,
       specialOffers: true,
-      firstName: 'Aid',
-      lastName: 'Hodzic',
+      firstName: 'Amer',
+      lastName: 'Muhic',
       company: 'SystemDuo',
       address: 'Zmaja od Bosne',
       country: 'Canada',
@@ -41,32 +47,33 @@ describe('Login tests', () => {
       success: true,
       successMessage: 'Account Created!',
     })
-    cy.get('[data-qa="continue-button"]').should('be.visible').click()
-    cy.get('a[href="/logout"').should('be.visible').click()
-    cy.get('a[href*="login"]').should('be.visible').click()
+    registrationPage.registeredUserLogin({
+      visible: true,
+    })
   })
 
   it('Login', () => {
     // When
-    cy.get('[data-qa="login-email"]').clear().type(email)
-    cy.get('[data-qa="login-password"]').clear().type('Test123')
-    cy.get('[data-qa="login-button"]').should('be.visible').click()
-
+    registrationPage.populateLoginDetails({
+      email: newEmail,
+      password: 'Test12345',
+    })
+    registrationPage.clickLoginButton({
+      visible: true,
+    })
     // Then
-    cy.get('a').contains('Logged in as Aid')
-    cy.get('a[href="/logout"]').should('be.visible')
+    registrationPage.shouldUserBeLogged({ visible: true })
   })
 
-  it('Login unsuccesfull', () => {
+  it.only('Login unsuccesfull', () => {
     // When
-    cy.get('[data-qa="login-email"]').clear().type(email)
-    cy.get('[data-qa="login-password"]').clear().type('Test')
-    cy.get('[data-qa="login-button"]').should('be.visible').click()
+    registrationPage.populateLoginDetails({
+      email: newEmail,
+      password: 'Test',
+    })
+    registrationPage.clickLoginButton({ visible: true })
 
     // Then
-    cy.get('.login-form')
-      .find('p[style="color: red;"]')
-      .should('be.visible')
-      .and('contain', 'Your email or password is incorrect!')
+    loginPage.shouldLoginErrorMessageBe({ visible: true })
   })
 })
