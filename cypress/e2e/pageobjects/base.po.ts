@@ -22,6 +22,7 @@ export class Page extends CypressPageObject {
     }
     return this.navigation
   }
+
   public shouldToastBe(options: {
     visible: boolean
     success: boolean

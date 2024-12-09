@@ -1,4 +1,3 @@
-import { get, values } from 'cypress/types/lodash'
 import { Page } from '../pageobjects/base.po'
 
 export class RegistrationPage extends Page {
@@ -12,12 +11,20 @@ export class RegistrationPage extends Page {
     this.signupButton.click()
   }
 
-  shouldRegistrationFormBeOpened = (options: { visible: boolean }) => {
+  shouldRegistrationFormBeVisible = (options: { visible: boolean }) => {
     this.registrationForm.should(options.visible ? 'be.visible' : 'not.exist')
+    // options.visible= true
+    // this.registrationForm.should('be.visible')
+    // options.visible=false
+    // this.registrationForm.should('not.exist')
   }
 
-  shouldSignUpFormBeVisible = (options: { opened: boolean }) => {
-    this.signUpForm.should('be.visible')
+  shouldSignupFormBeVisible = (options: { visible: boolean }) => {
+    this.signupForm.should(options.visible ? 'be.visible' : 'not.exist')
+  }
+
+  inputFirstName = (values: { firstName: string }) => {
+    this.firstNameInput.clear().type(values.firstName)
   }
 
   registerUser = (values: {
@@ -29,7 +36,7 @@ export class RegistrationPage extends Page {
     yearOfBirth: string
     newsletter: boolean
     specialOffers: boolean
-    firstName: string
+    firstName?: string
     lastName: string
     company?: string
     address: string
@@ -39,25 +46,29 @@ export class RegistrationPage extends Page {
     zipcode: string
     mobileNumber: string
   }) => {
-    this.titleRadioButton.check(values.title)
+    this.titleRadioButtons.check(values.title)
     values.name && this.nameInput.clear().type(values.name)
+    /*if (values.name) { linija iznad se moze rijesiti i na ovaj komentarisani način
+      this.nameInput.clear().type(values.name)
+    }*/
     this.passwordInput.clear().type(values.password)
     this.dayOfBirthSelector.select(values.dayOfBirth)
     this.monthOfBirthSelector.select(values.monthOfBirth)
     this.yearOfBirthSelector.select(values.yearOfBirth)
     values.newsletter && this.newsletterCheckbox.check()
-    values.newsletter && this.specialOfferCheckbox.check()
-    this.firstNameInput.clear().type(values.firstName)
+    values.specialOffers && this.specialOffersCheckbox.check()
+    values.firstName && this.firstNameInput.clear().type(values.firstName)
     this.lastNameInput.clear().type(values.lastName)
     values.company && this.inputCompanyField.clear().type(values.company)
-    this.inputAddressField.clear().type(values.address)
+    this.inputAddress1Field.clear().type(values.address)
     this.countrySelector.select(values.country)
     this.inputStateField.clear().type(values.state)
     this.inputCityField.clear().type(values.city)
-    this.inputZipcodeField.clear().type(values.zipcode)
+    this.inputZipCodeField.clear().type(values.zipcode)
     this.inputMobileNumberField.clear().type(values.mobileNumber)
     this.createAccountButton.should('be.visible').click()
   }
+
   shouldUserBeRegistered = (options: {
     success: boolean
     successMessage?: string
@@ -83,6 +94,12 @@ export class RegistrationPage extends Page {
       .invoke('prop', 'validationMessage')
       .should('eq', options.errorMessage)
   }
+
+  //
+  //
+  //
+  //
+
   registerUserApi = (options: {
     name: string
     email: string
@@ -139,67 +156,92 @@ export class RegistrationPage extends Page {
   get signupButton() {
     return this.cy.get('[data-qa="signup-button"]')
   }
+
   get registrationForm() {
     return cy.get('form[action*="signup"]')
   }
-  get signUpForm() {
-    return this.cy.get('.signup-form')
+
+  get signupForm() {
+    return cy.get('.signup-form')
   }
-  get titleRadioButton() {
-    return this.cy.get('input[type="radio"]')
+
+  get titleRadioButtons() {
+    return cy.get('input[type="radio"]')
   }
+
   get nameInput() {
-    return this.cy.get('[data-qa="name"]')
+    return cy.get('[data-qa="name"]')
   }
+
   get passwordInput() {
-    return this.cy.get('[data-qa="password"]')
+    return cy.get('[data-qa="password"]')
   }
+
   get dayOfBirthSelector() {
-    return this.cy.get('[data-qa="days"]')
+    return cy.get('[data-qa="days"]')
   }
+
   get monthOfBirthSelector() {
-    return this.cy.get('[data-qa="months"]')
+    return cy.get('[data-qa="months"]')
   }
+
   get yearOfBirthSelector() {
-    return this.cy.get('[data-qa="years"]')
+    return cy.get('[data-qa="years"]')
   }
+
   get newsletterCheckbox() {
-    return this.cy.get('#newsletter')
+    return cy.get('#newsletter')
   }
-  get specialOfferCheckbox() {
-    return this.cy.get('#optin')
+
+  get specialOffersCheckbox() {
+    return cy.get('#optin')
   }
+
   get firstNameInput() {
-    return this.cy.get('[data-qa="first_name"]')
+    return cy.get('[data-qa="first_name"]')
   }
+
   get lastNameInput() {
-    return this.cy.get('[data-qa="last_name"]')
+    return cy.get('[data-qa="last_name"]')
   }
+
   get inputCompanyField() {
-    return this.cy.get('[data-qa="company"]')
+    return cy.get('[data-qa="company"]')
   }
-  get inputAddressField() {
-    return this.cy.get('[data-qa="address"]')
+
+  get inputAddress1Field() {
+    return cy.get('[data-qa="address"]')
   }
+
+  get inputAddress2Field() {
+    return cy.get('[data-qa="address2"]')
+  }
+
   get countrySelector() {
-    return this.cy.get('[data-qa="country"]')
+    return cy.get('[data-qa="country"]')
   }
+
   get inputStateField() {
-    return this.cy.get('[data-qa="state"]')
+    return cy.get('[data-qa="state"]')
   }
+
   get inputCityField() {
-    return this.cy.get('[data-qa="city"]')
+    return cy.get('[data-qa="city"]')
   }
-  get inputZipcodeField() {
-    return this.cy.get('[data-qa="zipcode"]')
+
+  get inputZipCodeField() {
+    return cy.get('[data-qa="zipcode"]')
   }
+
   get inputMobileNumberField() {
-    return this.cy.get('[data-qa="mobile_number"]')
+    return cy.get('[data-qa="mobile_number"]')
   }
+
   get createAccountButton() {
-    return this.cy.get('[data-qa="create-account"]')
+    return cy.get('[data-qa="create-account"]')
   }
+
   get accountCreatedMessage() {
-    return this.cy.get('[data-qa="account-created"]')
+    return cy.get('[data-qa="account-created"]')
   }
 }
