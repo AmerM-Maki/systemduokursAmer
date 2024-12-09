@@ -12,8 +12,8 @@ describe('Registration tests', () => {
   let spanishData
   let germanData
   beforeEach('Navigate to automationexercise', () => {
-    adminCredentials = Cypress.env('credentials').admin
-    creditCardInfo = Cypress.env('credentials').creditCardInfo
+   // adminCredentials = Cypress.env('credentials').admin
+   // creditCardInfo = Cypress.env('credentials').creditCardInfo
     // adminCredentials.password pristup admin password vrijednosti
     // adminCredentials.email pristup admin email vrijednosti
     // creditCardInfo.cardNumber pristup broju kartice iz cypress config.ts

@@ -2,9 +2,11 @@ import { registrationPage, loginPage } from '../../utils/initialize'
 
 describe('Login tests', () => {
   let email
+  let newEmail
 
   beforeEach(() => {
     email = `aid${Date.now()}@example.com`
+    newEmail = `aid${Date.now()}@example.com`
     cy.visit('/')
     // When
     registrationPage.getNavigation().visit()
