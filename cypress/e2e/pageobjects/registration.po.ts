@@ -1,9 +1,8 @@
-import { values } from 'cypress/types/lodash'
 import { Page } from '../pageobjects/base.po'
 
 export class RegistrationPage extends Page {
   constructor() {
-    super(`registration`, cy)
+    super(`login`, cy)
   }
 
   populateEmailandName = (values: { email: string; name: string }) => {
@@ -145,25 +144,7 @@ export class RegistrationPage extends Page {
       },
     })
   }
-  registeredUserLogin = (options: { visible: boolean }) => {
-    this.continueButton
-      .should(options.visible ? 'be.visible' : 'not.exist')
-      .click()
-    this.navLogout.should(options.visible ? 'be.visible' : 'not.exist').click()
-    this.navLogin.should(options.visible ? 'be.visible' : 'not.exist').click()
-  }
-  populateLoginDetails = (values: { email: string; password: string }) => {
-    this.emailInputLogin.clear().type(values.email)
-    this.passwordInputLogin.clear().type(values.password)
-  }
-  clickLoginButton = (options: { visible: boolean }) => {
-    this.loginButton
-      .should(options.visible ? 'be.visible' : 'not.exist')
-      .click()
-  }
-  shouldUserBeLogged = (options: { visible: boolean }) => {
-    this.loggedInButton.should(options.visible ? 'be.visible' : 'not.exist')
-  }
+
   get emailInputRegistration() {
     return cy.get('[data-qa="signup-email"]')
   }
@@ -262,26 +243,5 @@ export class RegistrationPage extends Page {
 
   get accountCreatedMessage() {
     return cy.get('[data-qa="account-created"]')
-  }
-  get continueButton() {
-    return this.cy.get('[data-qa="continue-button"]')
-  }
-  get navLogout() {
-    return this.cy.get('a[href="/logout"')
-  }
-  get navLogin() {
-    return cy.get('a[href*="login"]')
-  }
-  get emailInputLogin() {
-    return cy.get('[data-qa="login-email"]')
-  }
-  get passwordInputLogin() {
-    return cy.get('[data-qa="login-password"]')
-  }
-  get loginButton() {
-    return cy.get('[data-qa="login-button"]')
-  }
-  get loggedInButton() {
-    return cy.get('a[href="/logout"]').should('be.visible')
   }
 }

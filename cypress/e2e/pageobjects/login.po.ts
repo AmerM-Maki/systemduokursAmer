@@ -1,10 +1,11 @@
 import { values } from 'cypress/types/lodash'
 import { Page } from '../pageobjects/base.po'
 
-export class LoginPage extends Page {
+export class ContactUsPage extends Page {
   constructor() {
     super(`login`, cy)
   }
+
   clickLoginButton = (options: { visible: boolean }) => {
     this.loginButton
       .should(options.visible ? 'be.visible' : 'not.exist')
